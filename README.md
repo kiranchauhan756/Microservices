@@ -1,1 +1,1 @@
-Preparing Spring boot intial project using GET,PUT,POST,PATCH,DELETE api.
+Preparing Spring boot initial project using GET,PUT,POST,PATCH,DELETE api.
