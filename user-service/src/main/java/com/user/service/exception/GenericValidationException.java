@@ -1,4 +1,12 @@
 package com.user.service.exception;
 
-public class GenericValidationException {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class GenericValidationException extends RuntimeException{
+    private String message;
 }

@@ -21,25 +21,24 @@ public class UserRepository {
         return users;
     }
 
-    public Optional<User> findById(long id){
-        return users.stream().filter(u -> u.getId() == id).findFirst();
+    public Optional<User> findById(Long id) {
+        return users.stream().filter(u -> u.getId().equals(id)).findFirst();
     }
 
 
     public void delete(User user) {
-     users.remove(user);
+        users.remove(user);
     }
 
     public Optional<User> findByFirstName(String firstName) {
-        return users.stream().filter(u->u.getFirstName().equals(firstName)).findFirst();
+        return users.stream().filter(u -> u.getFirstName().equals(firstName)).findFirst();
     }
 
-    public User updateUser(long id){
-        Optional<User> user=users.stream().filter(u-> u.getId()==id).findFirst();
-        int index=users.indexOf(user.get());
-        if(index!=-1){
-            users.set(index,user.get());
+    public User updateUser(User user) {
+        int index = users.indexOf(user);
+        if (index != -1) {
+            users.set(index, user);
         }
-        return user.get();
+        return user;
     }
 }
