@@ -36,17 +36,17 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<User>> getAllUser() {
-        return ResponseEntity.ok(userService.findAll());
+    public ResponseEntity<List<UserResponse>> getAllUser() {
+        return ResponseEntity.ok(userService.findAllUsers());
     }
 
     @GetMapping
-    public ResponseEntity<User> getUserByFirstName(@RequestParam("firstName") @NotNull String firstName) {
+    public ResponseEntity<UserResponse> getUserByFirstName(@RequestParam("firstName") @NotNull String firstName) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findByFirstName(firstName));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<UserResponse> findUserById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
 

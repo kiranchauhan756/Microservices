@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
         this.userRepo = userRepo;
         this.converter = converter;
     }
-
+//test completed
     public UserResponse save(UserRequest userRequest) {
         Optional<User> existingUser = userRepo.findById(userRequest.getId());
         if (existingUser.isEmpty()) {
@@ -34,15 +35,25 @@ public class UserService {
             throw new GenericValidationException("User with this id already exists try wth another one");
         }
     }
-
-    public List<User> findAll() {
-        return userRepo.findAll();
+//test completed
+    public List<UserResponse> findAllUsers() {
+          Optional<List<User>> users= Optional.of(userRepo.findAllUsers());
+          if(!users.get().isEmpty())
+              return users.get().stream().map(user-> (UserResponse) converter.convert(user,new UserResponse())).collect(Collectors.toList());
+              else{
+            throw new NoDataFoundException("Currently there is no user exists in the system");
+        }
     }
+//test completed
+    public UserResponse findById(long id) {
+        Optional<User> user=userRepo.findById(id);
+        if(user.isPresent()) return (UserResponse) converter.convert(user.get(),new UserResponse());
 
-    public User findById(long id) {
-        return userRepo.findById(id).orElseThrow(() -> new NoDataFoundException("user with this id doesn't exist"));
+        else{
+        throw new NoDataFoundException("user with this id doesn't exist");
+        }
     }
-
+//test completed
     public UserResponse updateUser(long id, UserRequest userRequest) {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {
@@ -56,7 +67,7 @@ public class UserService {
             throw new NoDataFoundException("user with this id doesn't exist");
         }
     }
-
+//test completed
     public void deleteUser(long id) {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {
@@ -65,11 +76,16 @@ public class UserService {
             throw new NoDataFoundException("user with this id doesn't exist");
         }
     }
+//test completed
+    public UserResponse findByFirstName(String firstName) {
+        Optional<User> user=userRepo.findByFirstName(firstName);
+        if(user.isPresent()) return (UserResponse) converter.convert(user.get(),new UserResponse());
 
-    public User findByFirstName(String firstName) {
-        return userRepo.findByFirstName(firstName).orElseThrow(() -> new NoDataFoundException("User with this firstName does not exist"));
+        else{
+            throw new NoDataFoundException("user with this firstName doesn't exist");
+        }
     }
-
+//test progress
     public UserResponse updateUserPartially(long id, UserRequest userRequest) {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {

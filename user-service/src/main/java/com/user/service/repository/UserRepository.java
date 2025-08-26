@@ -17,7 +17,7 @@ public class UserRepository {
         return user;
     }
 
-    public List<User> findAll() {
+    public List<User> findAllUsers() {
         return users;
     }
 
