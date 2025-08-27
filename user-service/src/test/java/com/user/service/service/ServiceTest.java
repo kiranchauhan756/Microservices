@@ -151,10 +151,18 @@ public class ServiceTest {
        User user=User.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
        User updatedUser=User.builder().id(1L).firstName("Rita").build();
        when(userRepository.findById(userRequest.getId())).thenReturn(Optional.ofNullable(user));
+       when(userRepository.updateUser(any(User.class))).thenReturn(updatedUser);
        UserResponse userResponse= UserResponse.builder().id(1L).firstName("Rita").build();
        when(converter.convert(any(User.class),any(UserResponse.class))).thenReturn(userResponse);
        UserResponse userResponse1=userService.updateUserPartially(1L,userRequest);
        assertThat(userResponse1).isNotNull();
        assertThat(userResponse1.getId()).isEqualTo(1L);
+    }
+    //This test will check if for partial update the user does not exist
+    @Test
+    void updateUserPartially_ThrowsException(){
+       UserRequest userRequest=UserRequest.builder().id(1L).firstName("Kiran").build();
+       when(userRepository.findById(1L)).thenReturn(Optional.empty());
+       assertThrows(NoDataFoundException.class,()-> userService.updateUserPartially(1L,userRequest));
     }
 }
