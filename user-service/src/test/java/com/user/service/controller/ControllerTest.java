@@ -15,10 +15,14 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+import java.util.List;
 
 import static com.user.service.Helper.asJsonString;
 import static com.user.service.Helper.asObject;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -189,4 +193,26 @@ public class ControllerTest extends BaseUnitTest {
         ErrorResponse errorResponse=asObject(response, ErrorResponse.class);
         assertThat(errorResponse.getErrorCode()).isEqualTo("AUTHN-002");
     }
+    //getAll users when user exists
+    @Test
+    void getAllUsers_WhenUserExists() throws Exception{
+        when(userService.findAllUsers()).thenReturn(List.of(UserResponse.builder().id(1L).firstName("Kiran").lastName("Chauhan").build(),UserResponse.builder().id(2L).firstName("Naman").lastName("Sinha").build()));
+        RequestBuilder requestBuilder=get(USER_REQUEST_PATH+"/").contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult=mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+        String response=mvcResult.getResponse().getContentAsString();
+        List userResponse=asObject(response, List.class);
+        assertFalse(userResponse.isEmpty());
+    }
+     @Test
+    void getAllUsers_When_UserDoesNotExists() throws Exception{
+        when(userService.findAllUsers()).thenThrow(NoDataFoundException.class);
+         RequestBuilder requestBuilder=get(USER_REQUEST_PATH+"/").contentType(MediaType.APPLICATION_JSON)
+                 .accept(MediaType.APPLICATION_JSON);
+         MvcResult mvcResult=mockMvc.perform(requestBuilder).andExpect(status().isNotFound())
+                 .andExpect(jsonPath("$.errorCode").exists()).andReturn();
+         String response =mvcResult.getResponse().getContentAsString();
+         ErrorResponse errorResponse=asObject(response, ErrorResponse.class);
+         assertThat(errorResponse.getErrorCode()).isEqualTo("AUTHN-002");
+     }
 }
