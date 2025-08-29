@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class GenericValidationException extends RuntimeException{
+public class UserAlreadyExistsException extends RuntimeException{
     private String message;
 }

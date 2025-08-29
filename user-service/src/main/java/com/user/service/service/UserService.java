@@ -4,7 +4,7 @@ import com.user.service.converter.Converter;
 import com.user.service.entity.User;
 import com.user.service.entity.UserRequest;
 import com.user.service.entity.UserResponse;
-import com.user.service.exception.GenericValidationException;
+import com.user.service.exception.UserAlreadyExistsException;
 import com.user.service.exception.NoDataFoundException;
 import com.user.service.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class UserService {
 
             return (UserResponse) converter.convert(savedUser, new UserResponse());
         } else {
-            throw new GenericValidationException("User with this id already exists try wth another one");
+            throw new UserAlreadyExistsException("User with this id already exists try wth another one");
         }
     }
 //test completed

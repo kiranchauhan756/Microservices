@@ -4,7 +4,7 @@ import com.user.service.converter.Converter;
 import com.user.service.entity.User;
 import com.user.service.entity.UserRequest;
 import com.user.service.entity.UserResponse;
-import com.user.service.exception.GenericValidationException;
+import com.user.service.exception.UserAlreadyExistsException;
 import com.user.service.exception.NoDataFoundException;
 import com.user.service.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ public class ServiceTest {
     UserRequest userRequest=UserRequest.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
     User user=User.builder().id(1L).firstName("Pooja").lastName("Chauhan").build();
     when(userRepository.findById(userRequest.getId())).thenReturn(Optional.ofNullable(user));
-    assertThrows(GenericValidationException.class,()->userService.save(userRequest));
+    assertThrows(UserAlreadyExistsException.class,()->userService.save(userRequest));
    }
    // This test will check if the findAllUsers method is working properly
    @Test

@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(GenericValidationException.class)
-    public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(GenericValidationException ex) {
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(UserAlreadyExistsException ex) {
         return new ResponseEntity<>(ErrorResponse.builder().message(ex.getMessage()).errorCode("AUTHN-001").build(), HttpStatus.FOUND);
     }
 
