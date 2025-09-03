@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserRequest {
-    @NotNull(message = "id cannot be null")
-    @Digits(message = "only numeric values are allowed", integer = Integer.MAX_VALUE, fraction = 0)
+
     private Long id;
+    @NotNull(message = "FirstName should not be null enter a valid name")
     private String firstName;
     private String lastName;
     private String email;

@@ -38,10 +38,10 @@ public class ServiceTest {
        UserRequest userRequest=UserRequest.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
        User user= User.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
        UserResponse userResponse=UserResponse.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
-       when(userRepository.findById(userRequest.getId())).thenReturn(Optional.empty());
+       when(userRepository.findByFirstName(userRequest.getFirstName())).thenReturn(Optional.empty());
        when(converter.convert(any(UserRequest.class),any(User.class))).thenReturn(user);
        when(converter.convert(any(User.class),any(UserResponse.class))).thenReturn(userResponse);
-       when(userRepository.saveUser(user)).thenReturn(user);
+       when(userRepository.save(user)).thenReturn(user);
        UserResponse response=userService.save(userRequest);
        assertThat(response).isNotNull();
        assertThat(response.getFirstName()).isEqualTo("Kiran");
@@ -51,7 +51,7 @@ public class ServiceTest {
     void addUser_duplicateUser_ThrowsException() throws Exception{
     UserRequest userRequest=UserRequest.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
     User user=User.builder().id(1L).firstName("Pooja").lastName("Chauhan").build();
-    when(userRepository.findById(userRequest.getId())).thenReturn(Optional.ofNullable(user));
+    when(userRepository.findByFirstName(userRequest.getFirstName())).thenReturn(Optional.ofNullable(user));
     assertThrows(UserAlreadyExistsException.class,()->userService.save(userRequest));
    }
    // This test will check if the findAllUsers method is working properly
@@ -66,14 +66,14 @@ public class ServiceTest {
        when(converter.convert(user1,new UserResponse())).thenReturn(userResponse1);
        when(converter.convert(user2,new UserResponse())).thenReturn(userResponse2);
        when(converter.convert(user3,new UserResponse())).thenReturn(userResponse3);
-       when(userRepository.findAllUsers()).thenReturn(List.of(user1,user2,user3));
+       when(userRepository.findAll()).thenReturn(List.of(user1,user2,user3));
        List<UserResponse> userResponsesList=userService.findAllUsers();
        assertThat(userResponsesList).isNotEmpty().hasSize(3);
    }
    //This test will check if the findAllUsers is working properly when there no user exists
     @Test
     void findAllUsers_ThrowsException(){
-       when(userRepository.findAllUsers()).thenReturn(Collections.emptyList());
+       when(userRepository.findAll()).thenReturn(Collections.emptyList());
        assertThrows(NoDataFoundException.class,()-> userService.findAllUsers());
     }
     //This test will check if the user with the id exists
@@ -101,7 +101,7 @@ public class ServiceTest {
           when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user));
           UserResponse userResponse=UserResponse.builder().id(1L).firstName("Naman").lastName("Sharma").build();
           when(converter.convert(any(User.class),any(UserResponse.class))).thenReturn(userResponse);
-          when(userRepository.updateUser(user)).thenReturn(user);
+          when(userRepository.save(user)).thenReturn(user);
           UserResponse userResponse1=userService.updateUser(1L,userRequest);
           assertThat(userResponse1).isNotNull();
           assertThat(userResponse1.getId()).isEqualTo(1L);
@@ -151,7 +151,7 @@ public class ServiceTest {
        User user=User.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
        User updatedUser=User.builder().id(1L).firstName("Rita").build();
        when(userRepository.findById(userRequest.getId())).thenReturn(Optional.ofNullable(user));
-       when(userRepository.updateUser(any(User.class))).thenReturn(updatedUser);
+       when(userRepository.save(any(User.class))).thenReturn(updatedUser);
        UserResponse userResponse= UserResponse.builder().id(1L).firstName("Rita").build();
        when(converter.convert(any(User.class),any(UserResponse.class))).thenReturn(userResponse);
        UserResponse userResponse1=userService.updateUserPartially(1L,userRequest);

@@ -25,10 +25,12 @@ public class UserService {
     }
 //test completed
     public UserResponse save(UserRequest userRequest) {
-        Optional<User> existingUser = userRepo.findById(userRequest.getId());
+        Optional<User> existingUser = userRepo.findByFirstName(userRequest.getFirstName());
         if (existingUser.isEmpty()) {
             User user = (User) converter.convert(userRequest, new User());
-            User savedUser = userRepo.saveUser(user);
+            user.setId(null);
+
+            User savedUser = userRepo.save(user);
 
             return (UserResponse) converter.convert(savedUser, new UserResponse());
         } else {
@@ -37,7 +39,7 @@ public class UserService {
     }
 //test completed
     public List<UserResponse> findAllUsers() {
-          Optional<List<User>> users= Optional.of(userRepo.findAllUsers());
+          Optional<List<User>> users= Optional.of(userRepo.findAll());
           if(!users.get().isEmpty())
               return users.get().stream().map(user-> (UserResponse) converter.convert(user,new UserResponse())).collect(Collectors.toList());
               else{
@@ -61,7 +63,7 @@ public class UserService {
             user1.setFirstName(userRequest.getFirstName());
             user1.setLastName(userRequest.getLastName());
             user1.setEmail(userRequest.getEmail());
-            User savedUser = userRepo.updateUser(user1);
+            User savedUser = userRepo.save(user1);
             return (UserResponse) converter.convert(savedUser, new UserResponse());
         } else {
             throw new NoDataFoundException("user with this id doesn't exist");
@@ -93,7 +95,7 @@ public class UserService {
             if (userRequest.getFirstName() != null) user1.setFirstName(userRequest.getFirstName());
             if (userRequest.getLastName() != null) user1.setLastName(userRequest.getLastName());
             if (userRequest.getEmail() != null) user1.setEmail(userRequest.getEmail());
-            User savedUser = userRepo.updateUser(user1);
+            User savedUser = userRepo.save(user1);
             return (UserResponse) converter.convert(savedUser, new UserResponse());
         } else {
             throw new NoDataFoundException("user with this id does not exist");

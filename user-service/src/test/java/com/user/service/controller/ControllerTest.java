@@ -20,8 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import static com.user.service.Helper.asJsonString;
-import static com.user.service.Helper.asObject;
+import static com.user.service.helper.Helper.asJsonString;
+import static com.user.service.helper.Helper.asObject;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -61,7 +61,7 @@ public class ControllerTest extends BaseUnitTest {
 
      @Test
      void addUser_WhenUserInputIsNotValid() throws Exception{
-        UserRequest userRequest=UserRequest.builder().firstName("Kiran").lastName("Chauhan").build();
+        UserRequest userRequest=UserRequest.builder().lastName("Chauhan").build();
         RequestBuilder requestBuilder=post(USER_REQUEST_PATH).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(asJsonString(userRequest));
         MvcResult mvcResult=mockMvc.perform(requestBuilder).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorCode").exists()).andReturn();
@@ -171,12 +171,13 @@ public class ControllerTest extends BaseUnitTest {
     //update user partially
     @Test
     void updatedUserPartially_WhenUserExists() throws Exception{
-        UserRequest userRequest=UserRequest.builder().id(1L).lastName("Chauhan").build();
+        UserRequest userRequest=UserRequest.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
         RequestBuilder requestBuilder=patch(USER_REQUEST_PATH+"/1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(userRequest)).accept(MediaType.APPLICATION_JSON);
-        UserResponse userResponse=UserResponse.builder().id(1L).lastName("Chauhan").build();
+        UserResponse userResponse=UserResponse.builder().id(1L).firstName("Kiran").lastName("Chauhan").build();
         when(userService.updateUserPartially(1L,userRequest)).thenReturn(userResponse);
         MvcResult mvcResult=mockMvc.perform(requestBuilder).andExpect(status().isOk())
                 .andExpect(jsonPath("$.lastName").value("Chauhan"))
+                .andExpect(jsonPath("$.firstName").value("Kiran"))
                 .andReturn();
         String response=mvcResult.getResponse().getContentAsString();
         UserResponse userResponse1=asObject(response, UserResponse.class);
@@ -184,7 +185,7 @@ public class ControllerTest extends BaseUnitTest {
     }
     @Test
     void updateUserPartially_WhenUserDoesNotExist() throws Exception{
-        UserRequest userRequest = UserRequest.builder().id(1L).lastName("Kumar").build();
+        UserRequest userRequest = UserRequest.builder().id(1L).firstName("Kiran").lastName("Kumar").build();
         RequestBuilder requestBuilder=patch(USER_REQUEST_PATH+"/1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(userRequest)).accept(MediaType.APPLICATION_JSON);
         when(userService.updateUserPartially(1L,userRequest)).thenThrow(NoDataFoundException.class);
         MvcResult mvcResult=mockMvc.perform(requestBuilder).andExpect(status().isNotFound())
