@@ -1,6 +1,5 @@
 package com.user.service.controller;
 
-import com.user.service.entity.User;
 import com.user.service.entity.UserRequest;
 import com.user.service.entity.UserResponse;
 import com.user.service.service.UserService;
