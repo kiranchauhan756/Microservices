@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Java First Thymeleaf Intro</title>
+    <link rel="stylesheet" th:href="@{/css/demo.css}">
+</head>
+<body>
+<form th:action="@{/process-form}" method="GET" >
+    <label>
+        <input type="text" placeholder="Enter your name" name="studentName"/>
+    </label>
+    <button>Submit</button>
+</form>
+</body>
+</html>

@@ -25,26 +25,26 @@ public class UserConfiguration {
 //        return new InMemoryUserDetailsManager(john,mary,suzi);
 //    }
 
-    @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource){
-        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.setUsersByUsernameQuery("select user_id,pw,active from members where user_id=?");
-        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_id,role from roles where user_id=?");
-        return jdbcUserDetailsManager;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(configurer ->
-                configurer.requestMatchers(HttpMethod.GET, "/user").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/user").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.PUT,  "/user/**").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.PATCH,"/user/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/user/**").hasRole("ADMIN")
-        );
-        httpSecurity.httpBasic(Customizer.withDefaults());
-        httpSecurity.csrf(csrf -> csrf.disable());
-        return httpSecurity.build();
-    }
+//    @Bean
+//    public UserDetailsManager userDetailsManager(DataSource dataSource){
+//        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+//        jdbcUserDetailsManager.setUsersByUsernameQuery("select user_id,pw,active from members where user_id=?");
+//        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_id,role from roles where user_id=?");
+//        return jdbcUserDetailsManager;
+//    }
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity.authorizeHttpRequests(configurer ->
+//                configurer.requestMatchers(HttpMethod.GET, "/user").hasRole("USER")
+//                        .requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
+//                        .requestMatchers(HttpMethod.POST, "/user").hasRole("MANAGER")
+//                        .requestMatchers(HttpMethod.PUT,  "/user/**").hasRole("MANAGER")
+//                        .requestMatchers(HttpMethod.PATCH,"/user/**").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.DELETE, "/user/**").hasRole("ADMIN")
+//        );
+//        httpSecurity.httpBasic(Customizer.withDefaults());
+//        httpSecurity.csrf(csrf -> csrf.disable());
+//        return httpSecurity.build();
+//    }
 }
