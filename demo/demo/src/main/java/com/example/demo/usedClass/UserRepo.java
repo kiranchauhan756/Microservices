@@ -1,4 +1,4 @@
-package com.example.demo.usedClasse;
+package com.example.demo.usedClass;
 
 import java.util.List;
 
