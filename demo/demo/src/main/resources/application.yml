@@ -11,8 +11,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-    logging:
-     level:
+
+  logging:
+    level:
       org:
-      springframework:
-        security:DEBUG
+        springframework:
+          security: DEBUG
+
