@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Directory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h3>Student Directory</h3>
+     <hr>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempStudent: ${student}">
+        <td th:text="${tempStudent.firstName}"></td>
+        <td th:text="${tempStudent.lastName}"></td>
+        <td th:text="${tempStudent.email}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
