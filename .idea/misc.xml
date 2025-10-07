@@ -11,6 +11,7 @@
         <option value="$USER_HOME$/Downloads/mvcProject/pom.xml" />
         <option value="$PROJECT_DIR$/mvcProject/pom.xml" />
         <option value="$PROJECT_DIR$/../mvcProject/pom.xml" />
+        <option value="$PROJECT_DIR$/../springSecurity/pom.xml" />
       </list>
     </option>
   </component>
