@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
@@ -8,5 +8,29 @@
 <h3>Love2 Code page </h3>
 <br>
 <p> User is authenticated and logged in successfully</p>
+<br> <br>
+User ID : <span sec:authentication="principal.username"></span>
+<br>
+User Roles : <span sec:authentication="principal.authorities"></span>
+<hr>
+<div sec:authorize="hasRole('MANAGER')">
+<p>
+<a th:href="@{/leaders}">Leadership Meeting</a>
+    (Only for manager peeps)
+</p>
+</div>
+<div sec:authorize="hasRole('ADMIN')">
+<p>
+    <a th:href="@{/systems}">IT Systems Admin</a>
+    (Only for system admin peeps)
+</p>
+
+</div>
+
+
+</p>
+<form action="#" th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout"/>
+</form>
 </body>
 </html>

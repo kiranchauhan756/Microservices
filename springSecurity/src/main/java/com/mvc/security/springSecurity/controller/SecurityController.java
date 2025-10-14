@@ -9,4 +9,9 @@ public class SecurityController {
     public String getHome(){
         return "fancy-login";
     }
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "access-denied";
+    }
+
 }
