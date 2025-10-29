@@ -6,38 +6,37 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+
 
 @Entity
-@Table(name="instructor_detail")
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "instructor")
-public class InstructorDetail {
+@Getter
+@Setter
+@Table
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
     @Column
-    private String youtube_channel;
-    @Column
-    private String hobby;
-    @OneToOne(mappedBy = "instructorDetail", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    private String title;
+    @ManyToOne(cascade={CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST})
+    @JoinColumn(name ="instructor_id")
     private Instructor instructor;
 
-    public InstructorDetail(String youtube_channel, String hobby) {
-        this.youtube_channel = youtube_channel;
-        this.hobby = hobby;
+    public Course(String title) {
+        this.title = title;
     }
+
 
 }
