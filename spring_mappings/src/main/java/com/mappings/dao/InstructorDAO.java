@@ -1,10 +1,8 @@
 package com.mappings.dao;
 
+import com.mappings.entities.Course;
 import com.mappings.entities.Instructor;
 import com.mappings.entities.InstructorDetail;
-import com.mappings.entities.Course;
-
-import java.util.List;
 
 public interface InstructorDAO {
     void save(Instructor instructor);
@@ -12,6 +10,9 @@ public interface InstructorDAO {
     void deleteInstructor(int id);
     InstructorDetail findInstructorDetailById(int id);
     void deleteInstructorDetailById(int id);
-    List<Course>  fetchCoursesByInstructor(int id);
     Instructor findInstructorByIdJoinFetch(int id);
+    void update (Instructor instructor);
+    void updateCourse(Course course);
+    Course findCourseById(int id);
+    void deleteCourse(int id);
 }

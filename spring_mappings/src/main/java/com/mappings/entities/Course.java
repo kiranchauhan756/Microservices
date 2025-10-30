@@ -38,5 +38,11 @@ public class Course {
         this.title = title;
     }
 
-
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

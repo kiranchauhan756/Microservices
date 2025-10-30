@@ -8,18 +8,20 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
+@Transactional
 public class ServiceImpl {
 
-    @Transactional
     public void findCoursesForInstructor(InstructorDAO instructorDAO) {
         int theId = 1;
         log.info("Finding instructor with id: {}" , theId);
         Instructor tempInstructor = instructorDAO.findInstructorById(theId);
         log.info("tempInstructor: {}", tempInstructor.getFirst_name());
-        log.info("the associated courses: {}", tempInstructor.getCourses());
-        log.info("Done!");
+        List<Course> courses = tempInstructor.getCourses();
+        log.info("the associated courses: {}", courses);
         findInstructorDetailById(instructorDAO);
     }
     
@@ -59,6 +61,11 @@ public class ServiceImpl {
 
     public void deleteInstructor(InstructorDAO instructorDAO) {
         int id=1;
+        Instructor instructor=instructorDAO.findInstructorById(1);
+        List<Course> courses =instructor.getCourses();
+        for(Course course: courses){
+            course.setInstructor(null);
+        }
         instructorDAO.deleteInstructor(id);
     }
 
@@ -67,7 +74,7 @@ public class ServiceImpl {
         Instructor instructor=instructorDAO.findInstructorById(id);
         log.info("The instructor with id "+ id+"is ="+instructor);
         InstructorDetail instructorDetail=instructor.getInstructorDetail();
-        log.info("The instructor detail with id "+ id+ "is"+instructorDetail);
+        log.info("The instructor detail with id {}is{}", id, instructorDetail);
     }
 
     public void createInstructor(InstructorDAO instructorDAO) {
@@ -78,5 +85,38 @@ public class ServiceImpl {
         instructorDAO.save(instructor);
         log.info("saved");
 
+    }
+
+    public void findInstructorByIdJoinFetch(InstructorDAO instructorDAO) {
+        int id=1;
+        log.info("Finding instructor  with id {} ",id);
+        Instructor tempInstructor=instructorDAO.findInstructorByIdJoinFetch(id);
+        log.info("We found the instructor with id {} :{}",id,tempInstructor);
+        log.info("Instructor with courses:{} ",tempInstructor.getCourses());
+        log.info("Instructor Detail : {}",tempInstructor.getInstructorDetail());
+
+
+    }
+
+    public void update(InstructorDAO instructorDAO) {
+        int id=1;
+        log.info("Find instructor id:  {}",id);
+        Instructor instructor=instructorDAO.findInstructorById(id);
+        instructor.setLast_name("Developer");
+        instructorDAO.update(instructor);
+
+    }
+
+    public void updateCourse(InstructorDAO instructorDAO) {
+        int id=10;
+        log.info("Finding course by id : {} ",id);
+        Course course=instructorDAO.findCourseById(id);
+        course.setTitle("english_tuition");
+        instructorDAO.updateCourse(course);
+    }
+
+    public void deleteCourse(InstructorDAO instructorDAO) {
+        int id=11;
+        instructorDAO.deleteCourse(id);
     }
 }

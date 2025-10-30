@@ -16,10 +16,12 @@ public class SpringMappingsApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ServiceImpl instructorService, InstructorDAO instructorDAO) {
 		return runner ->
-			instructorService.findCoursesForInstructor(instructorDAO);
-
-
-
+			//instructorService.findCoursesForInstructor(instructorDAO);
+		    //instructorService.findInstructorByIdJoinFetch(instructorDAO);
+             //instructorService.update(instructorDAO);
+             //  instructorService.updateCourse(instructorDAO);
+            // instructorService.deleteInstructor(instructorDAO);
+		      instructorService.deleteCourse(instructorDAO);
 	}
 
 }
