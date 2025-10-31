@@ -4,6 +4,7 @@ import com.mappings.dao.InstructorDAO;
 import com.mappings.entities.Course;
 import com.mappings.entities.Instructor;
 import com.mappings.entities.InstructorDetail;
+import com.mappings.entities.Reviews;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -118,5 +119,34 @@ public class ServiceImpl {
     public void deleteCourse(InstructorDAO instructorDAO) {
         int id=11;
         instructorDAO.deleteCourse(id);
+    }
+
+    public void createInstructorWithReviews(InstructorDAO instructorDAO) {
+        Instructor instructor=new Instructor("pratibha","yadav","pratibha@gmail.com");
+        InstructorDetail instructorDetail=new InstructorDetail("www.pratibha.youtube","cheating");
+        Course course1=new Course("economics");
+        Course course2=new Course("physics");
+        instructor.setInstructorDetail(instructorDetail);
+        instructor.add(course1);
+        instructor.add(course2);
+        Reviews reviews1=new Reviews("I love the economics course");
+        Reviews reviews11=new Reviews("Economics course is not well");
+        Reviews reviews12=new Reviews("Not a detailed course");
+        Reviews reviews13=new Reviews("best course");
+
+
+        Reviews reviews2=new Reviews("I love the physics course");
+        course1.addReviews(reviews1);
+        course2.addReviews(reviews2);
+        course1.addReviews(reviews11);
+        course1.addReviews(reviews12);
+        course1.addReviews(reviews13);
+        log.info("Saving the instructor");
+        instructorDAO.save(instructor);
+    }
+
+    public void deleteReviewsByCourseId(InstructorDAO instructorDAO) {
+        int id=10;
+        instructorDAO.deleteReviewsByCourseId(id);
     }
 }

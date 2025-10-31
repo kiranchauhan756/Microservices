@@ -22,6 +22,8 @@ public class SpringMappingsApplication {
              //  instructorService.updateCourse(instructorDAO);
             // instructorService.deleteInstructor(instructorDAO);
 		      instructorService.deleteCourse(instructorDAO);
+		//instructorService.createInstructorWithReviews(instructorDAO);
+		//instructorService.deleteReviewsByCourseId(instructorDAO);
 	}
 
 }

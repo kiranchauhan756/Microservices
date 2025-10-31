@@ -3,11 +3,14 @@ package com.mappings.dao;
 import com.mappings.entities.Course;
 import com.mappings.entities.Instructor;
 import com.mappings.entities.InstructorDetail;
+import com.mappings.entities.Reviews;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class InstructorDAOImp implements InstructorDAO{
@@ -79,5 +82,16 @@ public class InstructorDAOImp implements InstructorDAO{
         Course course=findCourseById(id);
         entityManager.remove(course);
     }
+
+
+    @Override
+    @Transactional
+    public void deleteReviewsByCourseId(int id) {
+        Course course=findCourseById(id);
+        if(course!=null){
+            course.getReviews().clear();
+        }
+    }
+
 
 }

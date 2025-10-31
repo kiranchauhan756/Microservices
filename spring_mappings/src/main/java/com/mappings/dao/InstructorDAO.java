@@ -3,6 +3,7 @@ package com.mappings.dao;
 import com.mappings.entities.Course;
 import com.mappings.entities.Instructor;
 import com.mappings.entities.InstructorDetail;
+import com.mappings.entities.Reviews;
 
 public interface InstructorDAO {
     void save(Instructor instructor);
@@ -15,4 +16,6 @@ public interface InstructorDAO {
     void updateCourse(Course course);
     Course findCourseById(int id);
     void deleteCourse(int id);
+    void deleteReviewsByCourseId(int id);
+
 }
