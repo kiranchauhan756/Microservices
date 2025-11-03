@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="form_validation" />
-        <module name="springSecurity" />
       </profile>
       <profile name="Annotation profile for mvcProject" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
